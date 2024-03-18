@@ -4,7 +4,7 @@ import viteLogo from "/vite.svg";
 import { useState } from "react";
 
 
-const List1:FC = () => {
+const Count:FC = () => {
     const [count, setCount] = useState(0);
 
     return <>
@@ -31,4 +31,4 @@ const List1:FC = () => {
     </>
 }
 
-export  default List1
+export  default Count
