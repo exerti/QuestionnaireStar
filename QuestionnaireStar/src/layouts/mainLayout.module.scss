@@ -1,0 +1,25 @@
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    .left{
+        
+    }
+
+    .right{
+
+    }
+}
+
+
+.main{
+
+    min-height: calc(100vh - 64px - 72px);
+}
+
+.footer{
+    text-align: center;
+    font-size: large;
+}

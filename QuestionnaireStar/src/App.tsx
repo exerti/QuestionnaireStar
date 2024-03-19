@@ -1,23 +1,14 @@
 
 // import './App.css'
-import  ListPage  from './commonpents/ListPage';
-import Count from './commonpents/count';
-import { Immer } from './demo/immerDemo';
-import UseRefDemo from './demo/useRefDemo';
+
+import { RouterProvider } from "react-router-dom";
+import router from "./router/index.tsx";
 function App() {
 
 
-  return (
-    <>
-      {/* <Count></Count> */}
-
-      {/* <Immer></Immer> */}
-
-      {/* <ListPage></ListPage> */}
-      
-  <UseRefDemo></UseRefDemo>      
-    </>
-  );
+  return <>
+   <RouterProvider router={router} />
+  </>
 }
 
 export default App;
