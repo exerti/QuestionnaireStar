@@ -1,5 +1,20 @@
-
-.container{
+.container {
     margin-bottom: 20px;
     padding: 12px;
+
+    .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+        font-size: large;
+        
+    }
+
+    .content{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+    }
 }

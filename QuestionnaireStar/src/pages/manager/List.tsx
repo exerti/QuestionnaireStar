@@ -2,7 +2,11 @@
 import React, { FC, useState } from "react";
 import Immer, { produce } from "immer";
 import SurveyCard from "../../commonpents/QuestionnaireCard";
-import styles from "../../styles/ListPage.module.scss";
+import styles from "../../styles/common.module.scss";
+import { Typography ,Empty, Divider, Spin } from 'antd';
+import MySearch from "../../commonpents/MySearch";
+const { Title } = Typography;
+
 
 type PropsType = {
     id: number,
@@ -57,13 +61,17 @@ const  ListMock= [
          
          <div className={styles.header}>
             <div className={styles.left}>
-                <h1>我的问卷</h1>
+                <Title level={2}>我的问卷</Title>
             </div>
             <div className={styles.right}>
-                <input type="text"  placeholder="请输入内容"/>
+               <MySearch></MySearch>
             </div>
          </div>
+         <Divider />
          <div className={styles.main}>
+            {
+                !list.length && <Empty></Empty>
+            }
             {
                list.map(item=>{
                    
@@ -72,6 +80,10 @@ const  ListMock= [
 
             }) 
             }
+         </div>
+
+         <div className={styles.footer}>
+            <Spin tip="Loading More" size="large"></Spin>
          </div>
 
     </>

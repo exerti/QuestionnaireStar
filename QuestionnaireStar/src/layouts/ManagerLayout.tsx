@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Outlet ,useLocation ,useNavigate} from "react-router-dom";
 
-import { Button, Layout, Space, Divider } from 'antd';
+import { Button, Layout, Space, Divider, Affix } from 'antd';
 import {PlusOutlined ,BarsOutlined,StarOutlined,DeleteOutlined ,BlockOutlined} from '@ant-design/icons';
 import styles from './mannager.module.scss'
 
@@ -15,7 +15,7 @@ const ManagerLayout: FC = () => {
     return <>
         <div className={styles.container}>
             <Layout className={styles.left}>
-               <Space direction="vertical">
+               <Affix offsetTop={20}><Space direction="vertical">
                <Button type="primary" size="large"  icon={<PlusOutlined />} onClick={ ()=>nav("/question")}>新建问卷</Button>
                 <Divider />
                 <Button type={pathname.endsWith("/manager/list")? "default" :"text" } size="large" icon={<BarsOutlined /> }  onClick={()=> nav("/manager/list")}>我的问卷</Button>
@@ -23,7 +23,7 @@ const ManagerLayout: FC = () => {
                 {/* <Button type="primary" size="large" icon={<BlockOutlined />}  onClick={()=> nav("/manager/stat")}>问卷统计</Button> */}
                 <Button type={pathname.endsWith("/manager/trash")? "default" :"text" } size="large"  icon={<DeleteOutlined/>} onClick={()=> nav("/manager/tarsh")}>回收站</Button>
                 
-               </Space>
+               </Space></Affix>
             </Layout>
 
             <Layout className={styles.right}>

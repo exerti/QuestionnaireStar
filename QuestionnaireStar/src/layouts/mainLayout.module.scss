@@ -3,7 +3,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
     .left{
         
     }
@@ -11,6 +10,7 @@
     .right{
 
     }
+    z-index: 1000;
 }
 
 

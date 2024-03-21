@@ -1,0 +1,20 @@
+.container{
+
+    background-image: url(../assets/wjx-banner-pc.jpg);
+    background-size: cover;
+    display: flex;  
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 742px;
+    .info{
+        text-align: center;
+        font-size: 20px;
+
+        button{
+            height: 60px;
+            font-size: 24px;
+        }
+    }
+
+}

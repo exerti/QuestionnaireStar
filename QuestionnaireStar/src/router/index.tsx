@@ -12,6 +12,7 @@ import Trash from "../pages/manager/Trash";
 import QuestionLayout from "../layouts/QuestionLayout";
 import Edit from "../pages/question/edit";
 import Stat from "../pages/question/stat";
+import FormElementsDemo from "../demo/表单组件/FormElementsDemo";
 
 
 const router = createBrowserRouter([
@@ -64,7 +65,16 @@ const router = createBrowserRouter([
                 ]
             }
         ]
+    },{
+        path: "/demo",
+        element: <FormElementsDemo></FormElementsDemo>
     }
 ])
 
 export default router;
+
+
+
+// --------------
+
+export const HOME_PATH = '/'
