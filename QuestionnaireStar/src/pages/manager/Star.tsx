@@ -1,31 +1,36 @@
-import React,{FC ,useState} from "react";
-import { Divider, Typography  ,Pagination} from 'antd';
+import React, { FC } from "react";
+import { Divider, Typography, Pagination, Spin } from 'antd';
 const { Title } = Typography;
 import styles from "../../styles/common.module.scss"
 import SurveyCard from "../../commonpents/QuestionnaireCard";
+import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
+import MySearch from "../../commonpents/MySearch";
 
-const  ListMock= [
-    { id: 1, title: "问卷一", ispublished: false ,isStar:true, answerCount: 5, createAt:"3月4日"},
-    { id: 2, title: "问卷二", ispublished: true,isStar:true, answerCount: 10, createAt:"3月4日" },
-    { id: 3, title: "问卷三", ispublished: false,isStar:true, answerCount: 15, createAt:"3月4日" }
-   
-]
 
-const Star :FC = () => {
-    const [list, setList] = useState(ListMock)
+
+const Star: FC = () => {
+
+    const { loading, data, error } = useLoadQuestionListData({ isstar: true })
+    const { list = [], total = 0 } = data?.data || {}
+
     return <>
         <div className={styles.header}>
             <div className={styles.left}>
                 <Title level={2}>星标问卷</Title>
             </div>
-          
+            <div className={styles.right}>
+                <MySearch></MySearch>
+            </div>
         </div>
-        
+
         <Divider />
+        {
+            loading &&<Spin tip="Loading More" size="large"/>
+        }
         <div className={styles.content}>
             {
-                list.map(item => {
-                    return <SurveyCard key={item.id} {...item}  deleteQusetion={() => { } }  editQuestion={()=>{}}></SurveyCard>
+                list.map((item: any) => {
+                    return <SurveyCard key={item.id} {...item} ></SurveyCard>
                 })
             }
 
@@ -33,11 +38,14 @@ const Star :FC = () => {
 
 
         <div className={styles.footer}>
-        <Pagination onChange={()=>{
-            console.log("change")
-        }} total={50}   />
+            {
+                !loading && total > 0 &&
+                <Pagination onChange={() => {
+                    console.log("change")
+                }} total={50} />
+            }
         </div>
     </>
 }
 
-export default Star ;
+export default Star;

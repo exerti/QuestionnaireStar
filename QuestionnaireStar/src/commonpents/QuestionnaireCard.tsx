@@ -12,8 +12,8 @@ type PropsType = {
   isStar: boolean,
   answerCount: number,
   createAt: string
-  deleteQusetion: (id: number) => void,
-  editQuestion: (id: number) => void,
+  deleteQusetion?: (id: number) => void ,
+  editQuestion?: (id: number) => void,
 
 }
 

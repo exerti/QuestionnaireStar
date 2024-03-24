@@ -1,7 +1,7 @@
 import axios from "axios";
 import {message} from "antd";
 const instance = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'http://localhost:3000',
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json;charset=UTF-8'
@@ -10,16 +10,26 @@ const instance = axios.create({
 
 })
 
-instance.interceptors.request.use(res=>{
+instance.interceptors.request.use(config=>{
+    
+    return config as any
+})
+
+instance.interceptors.response.use(res=>{
     const resData =  (res.data || {}) as ResType
     const {code,msg,data} = resData
-    if(code !== 0){
+    if(code === 200){
+        message.success(msg)
+       
+    }else{
         if(msg){
             message.error(msg)
         }
+        throw new Error(msg)
     }
-    return data as any
+    return  resData as any
 })
+
 export default instance;
 
 export  type  ResType = {
