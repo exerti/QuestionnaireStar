@@ -10,7 +10,7 @@ import MySearch from "../../commonpents/MySearch";
 
 const Star: FC = () => {
 
-    const { loading, data, error } = useLoadQuestionListData({ isstar: true })
+    const { loading, data, error } = useLoadQuestionListData({ isStar: true })
     const { list = [], total = 0 } = data?.data || {}
 
     return <>
@@ -25,7 +25,9 @@ const Star: FC = () => {
 
         <Divider />
         {
-            loading &&<Spin tip="Loading More" size="large"/>
+               loading && <Spin tip="Loading More" size="large">
+               <></>
+           </Spin>
         }
         <div className={styles.content}>
             {

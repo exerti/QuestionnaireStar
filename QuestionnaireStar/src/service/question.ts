@@ -2,7 +2,7 @@ import  axios ,{ResType,ResponseData} from './axios'
 
 type  SearchOpt = {
     keyword?:string,
-    isstar?:boolean,
+    isStar?:boolean,
     isdelete?:boolean,
 }
 

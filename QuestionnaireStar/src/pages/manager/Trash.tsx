@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import styles from "../../styles/common.module.scss"
-import { Button, Card,  Typography, Tag, Table, Divider,Space } from "antd";
+import { Button, Card, Typography, Tag, Table, Divider, Space, Spin } from "antd";
 import type { TableColumnsType } from 'antd';
 import { useNavigate } from "react-router-dom";
 import useTitle from "../../hooks/useTitle";
@@ -88,26 +88,32 @@ const Trash: FC = () => {
             } */}
 
             {
+                loading && <Spin tip="Loading More" size="large">
+                    <></>
+                </Spin>}
+            {
                 list.length > 0 &&
-                <div>
-                    <div style={{ marginBottom: 16 }}>
-                      <Space>
-                      <Button type="default" >
-                            恢复
-                        </Button>
-                        <Button type="default" >
-                            彻底删除
-                        </Button>
-                        
-                      </Space>
+                <Card>
+                    <div>
+                        <div style={{ marginBottom: 16 }}>
+                            <Space>
+                                <Button type="default" >
+                                    恢复
+                                </Button>
+                                <Button type="default" >
+                                    彻底删除
+                                </Button>
+
+                            </Space>
+                        </div>
+                        <Divider></Divider>
+                        <Table
+                            rowSelection={{
+                                type: selectionType,
+                                ...rowSelection,
+                            }} dataSource={list} columns={TableColumns} pagination={false}></Table>
                     </div>
-                    <Divider></Divider>
-                    <Table
-                        rowSelection={{
-                            type: selectionType,
-                            ...rowSelection,
-                        }} dataSource={list} columns={TableColumns} pagination={false}></Table>
-                </div>
+                </Card>
 
 
             }
