@@ -34,3 +34,34 @@ export async   function getQuestionList(opt: Partial<SearchOpt>={}):Promise<ResT
    const data =   (await  axios.get(url ,{params:opt}))  as ResType
    return  data
 }
+
+
+// 更新问卷
+
+export async   function updateQuestion(id:number,opt :{
+    [key:string]:any
+}):Promise<ResType> {
+    const  url = `/api/question/${id}`
+    const data =   (await  axios.patch(url ,opt))  as ResType
+    return  data
+     
+}
+
+// 复制问卷
+
+export async   function copyQuestion(id:number):Promise<ResType> {
+    const  url = `/api/question/copy/${id}`
+        
+    const data =   (await  axios.post(url))  as ResType 
+    
+    return  data
+    
+}
+
+//删除问卷
+
+export async  function deleteQuestion(ids:string[]):Promise<ResType> {
+    const  url = `/api/question`
+    const data =   (await  axios.delete(url ,{data:{ids}}))  as ResType
+    return  data
+}

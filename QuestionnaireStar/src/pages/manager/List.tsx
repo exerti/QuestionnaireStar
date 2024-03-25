@@ -128,9 +128,9 @@ type PropsType = {
          <div className={styles.main}>
            
             {
-                list.length >0 && list.map((item:any)=>{
+                list.length >0 && list.map((item:any,index)=>{
                 let { id} = item 
-                return  <SurveyCard  key={id} {...item}  ></SurveyCard> 
+                return  <SurveyCard  key={index} {...item}   ></SurveyCard> 
 
             }) 
             }

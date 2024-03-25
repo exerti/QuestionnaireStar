@@ -15,7 +15,7 @@ const useLoadQuestionListData = (type:Partial<Searchtype>={}) => {
     const page  = parseInt(params.get("page") || "1")
     const pagesize  = parseInt(params.get("pagesize") || "10")
     
-    const {loading ,data ,error} = useRequest(async ()=>{
+    const {loading ,data ,error ,refresh} = useRequest(async ()=>{
         const keyword =  params.get("keyword") || ''
         const data  = await getQuestionList( {keyword , isdelete , isStar , page , pagesize})
         return data
@@ -23,7 +23,7 @@ const useLoadQuestionListData = (type:Partial<Searchtype>={}) => {
         refreshDeps:[params], // 依赖params变化
     })
     
-    return {loading ,data ,error}
+    return {loading ,data ,error ,refresh}
 }
 
 
