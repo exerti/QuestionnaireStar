@@ -1,16 +1,33 @@
 import React, { FC } from "react";
-import { Card, Space, Typography, Form, Input, Button, Checkbox } from 'antd'; "antd";
+import { Card, Space, Typography, Form, Input, Button, Checkbox, message } from 'antd'; "antd";
 import styles from '../../styles/Register.module.scss'
 import { UserAddOutlined, LockOutlined, UserOutlined  ,PhoneOutlined} from '@ant-design/icons';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRequest } from "ahooks";
+import { register } from "../../service/user";
 const { Title } = Typography;
 
 
 
 const Register: FC = () => {
+    const nav= useNavigate();
+    const {run } = useRequest( async (values)=>{
+         const  {username,phonenumber,password} = values;
+         const  res =  await register(username,phonenumber,password) 
+         return res;
+    },
+    {
+        manual:true,
+        onSuccess(res){
+            message.success('注册成功');
+            nav('/login');
+        }
+    }
+ 
+    )
 
     function onFinish(values: any) {
-        console.log('Received values of form: ', values);
+        run(values);
     }
 
     return <>

@@ -4,6 +4,7 @@ import { Layout, Flex } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import  styles from "./mainLayout.module.scss"
 import Logo from "../commonpents/Logo";
+import UserInfo from "../commonpents/UserInfo";
 
 
 const MainLayout: FC = () => {
@@ -13,7 +14,9 @@ const MainLayout: FC = () => {
         <div className={styles.left} >
             <Logo></Logo>
             </div> 
-        <div className={styles.right}>登录</div>
+        <div className={styles.right}>
+          <UserInfo></UserInfo>
+        </div>
       </Header>
       <Content className={styles.main} >
         <Outlet></Outlet>

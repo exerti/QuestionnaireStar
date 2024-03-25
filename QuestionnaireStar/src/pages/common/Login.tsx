@@ -1,9 +1,12 @@
 import React, { FC } from "react";
-import { Card, Space, Typography, Form, Input, Button, Checkbox , } from 'antd'; "antd";
+import { Card, Space, Typography, Form, Input, Button, Checkbox, message, } from 'antd'; "antd";
 import styles from '../../styles/Register.module.scss'
 import { UserAddOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CaptchaInput from "../../commonpents/CaptchaInput";
+import { useRequest } from "ahooks";
+import { getVerifyCode, login } from "../../service/user";
+import { setUserToken } from "../../utils/userToken";
 const { Title } = Typography;
 
 
@@ -14,6 +17,35 @@ function onFinish(values: any) {
 
 
 const Login: FC = () => {
+    const nav = useNavigate()
+    const { run } = useRequest(async (values) => {
+        const { username, password, VerifyCode } = values
+        const res = await login(username, password)
+        return res
+    }, {
+        manual: true, // 手动触发
+        onSuccess: (res) => {
+            const { token } = res.data || {}
+            setUserToken(token)
+            message.success("登录成功")
+            nav("/manager/list")
+        }
+    }
+    )
+
+    function onFinish(values: any) {
+        const { username, password, VerifyCode, remember } = values || {}
+        run({ username, password, VerifyCode, remember })
+        if (remember) {
+            localStorage.setItem("username", username)
+        } else {
+            localStorage.removeItem("username")
+        }
+
+    }
+
+
+
     return <>
         <div className={styles.container}>
 
@@ -41,17 +73,17 @@ const Login: FC = () => {
                         <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
                     </Form.Item>
                     <Form.Item
-                            name="password"
+                        name="password"
 
-                            rules={[{ required: true, message: 'Please input your Password!' }]}
-                        >
-                            <Input
-                                prefix={<LockOutlined className="site-form-item-icon" />}
-                                type="password"
-                                placeholder="Password"
-                            />
+                        rules={[{ required: true, message: 'Please input your Password!' }]}
+                    >
+                        <Input
+                            prefix={<LockOutlined className="site-form-item-icon" />}
+                            type="password"
+                            placeholder="Password"
+                        />
                     </Form.Item>
-                    
+
                     <Form.Item>
                         <CaptchaInput></CaptchaInput>
                     </Form.Item>

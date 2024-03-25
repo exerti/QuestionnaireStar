@@ -1,13 +1,48 @@
+import { Button, Space } from "antd";
 import React, {
-    Fc
+    FC
 } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { removeUserToken } from "../utils/userToken";
+import { useRequest } from "ahooks";
+import { getUserInfo } from "../service/user";
+import { UserOutlined } from "@ant-design/icons";
+
+
+
+
 
 const UserInfo = () => {
+
+    const { data } = useRequest(getUserInfo)
+    const { userName, userimage } = data?.data || {}
+    const nav = useNavigate()
+    function handleClick() {
+        removeUserToken()
+        nav('/login')
+    }
+
+    const user = (
+        <>
+            <Space>
+                <span style={{
+                    color: 'white'
+                }}>
+                    <UserOutlined />
+                    {userName}</span>
+                <Button type="link" onClick={handleClick} > 退出</Button>
+            </Space>
+
+        </>
+    )
+
     // 已经登录的状态 
     return <>
-            <div>用户信息</div>
-            <div>客户中心</div>
-            <div>退出</div>
+        {
+            userName ? user : <Link to='/login'>登录 </Link>
+        }
+
+
 
     </>
 }
