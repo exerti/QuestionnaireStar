@@ -1,11 +1,15 @@
 
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import Immer, { produce } from "immer";
 import SurveyCard from "../../commonpents/QuestionnaireCard";
 import styles from "../../styles/common.module.scss";
 import { Typography ,Empty, Divider, Spin } from 'antd';
 import MySearch from "../../commonpents/MySearch";
 import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
+import MyPagination from "../../commonpents/MyPagination ";
+import { useSearchParams } from "react-router-dom";
+import { useDebounceFn, useRequest } from "ahooks";
+import { getQuestionList } from "../../service/question";
 
 const { Title } = Typography;
 
@@ -21,40 +25,94 @@ type PropsType = {
 
 
  const List: FC = () => {
-    const {loading ,data ,error}  =  useLoadQuestionListData()
-    console.log(data);
-    const { list=[] ,total=0 } = data?.data || {}
+    const [started , setStarted] = useState(false)
+    const [list , setList] = useState([])
+    const [total , setTotal] = useState(0)
+    const [page , setPage] = useState(1)
+    const [params]  = useSearchParams()
+    const hasmore = total > list.length
+    const keyword = params.get('keyword')|| '' 
 
-    //  const add = () => {
-    //     // setList([...list,{id:6,title:"问卷六" , ispublished:true}])
-    //     //  XXXX  setList(produce(draft => draft.push({ id: Math.random()%600, title: `问卷${Math.random()%600}`, ispublished: true })))
-    //     //  QS:　　看起来在使用 Immer 时出现了问题。错误提示说一个 immer producer 
-    //     //返回了一个新值并修改了 draft 对象，这是不被允许的。
-    //     //在 Immer 中，一个 producer 函数应该要么返回一个新值，要么修改 draft，而不是同时做这两件事。
-    //     setList(produce(draft => {
-    //         const randomNumber = Math.floor(Math.random() * 1000); // 生成一个随机数作为 id
-    //         return [...draft, { id: randomNumber, title: `问卷 ${randomNumber}`, ispublished: true }];
-    //     }));
+    const containerRef = useRef<HTMLDivElement>(null)
 
-    // }
+    //keyword发生变化时，重新加载数据
+    useEffect(()=>{
+       setList([])
+       setPage(1)
+       setTotal(0)
+    },[keyword])
 
+    //真正加载数据
+    const {run: loadmore, loading}  = useRequest(async ()=>{
+        const res = await  getQuestionList({
+            page,
+            pagesize:10,
+            keyword
+        })
+        return res
+    },{
+        manual:true,
+        onSuccess: (res:any)=>{
+            const {list: l , total} =res?.data
+            setTotal(total)
+            setList(list.concat(l))
+            setPage(page+1)
+        }
+    })
 
-    // const del = (id: number) => {
-    //     // console.log(id);
-    //     const newList = list.filter(item => item.id !== id);
-    //     setList(newList);
-    // }
+    //防抖 
+    const {run :handleScroll} = useDebounceFn(()=>{
+        if(!containerRef.current) return 
+        // const scrollTop = containerRef.current.scrollTop
+        // const clientHeight = containerRef.current.clientHeight
+        // const scrollHeight = containerRef.current.scrollHeight
+        // if(scrollTop + clientHeight >= scrollHeight){   
+        //     if(hasmore){
+        //         setPage(page+1)
+        //         loadmore()
+        //     }
+        // }
+        const domRect = containerRef.current.getBoundingClientRect()
+        if(!domRect) return 
+        const {bottom} = domRect
+        if(bottom <= document.body.clientHeight){
+            if(hasmore){
+                loadmore()
+                setStarted(true)
+            }
+        }
+    },{wait:500})
 
-    // const edit = (id: number) => {
-    //     setList(
-    //         list.map(
-    //             item => item.id === id ? { ...item, ispublished: !item.ispublished } : item
-    //         )
-    //     )
-    // }
+    //1、初始化
+    useEffect(()=>{
+        loadmore()
+    },[params])
+    //2、滚动到底部
+    useEffect(()=>{
+        window.addEventListener('scroll',handleScroll)
+        return ()=>{
+            window.removeEventListener('scroll',handleScroll)
 
+        }
+    },[hasmore,params])
+    
+    
+    // 多响应状态的jsx
 
-
+    const loadmoreElement =()=>{
+        if( !started || loading){
+            return <Spin tip="Loading More" size="large" ><></></Spin>
+        }
+        if(total ===0){
+            return <Empty description="暂无数据" />
+        }
+        if(!hasmore) {
+            return <span > 没有更多了</span>
+        }
+        return <>
+          正在加载更多...
+        </>
+    }
 
     return <>
          
@@ -68,11 +126,7 @@ type PropsType = {
          </div>
          <Divider />
          <div className={styles.main}>
-            {
-               loading && <Spin tip="Loading More" size="large">
-               <></>
-           </Spin>
-            }
+           
             {
                 list.length >0 && list.map((item:any)=>{
                 let { id} = item 
@@ -82,11 +136,9 @@ type PropsType = {
             }
          </div>
 
-        {!loading &&
-          <div className={styles.footer}  >
-                <>分页组件</>
-            </div>
-        }
+         <div className={styles.footer}>
+            <div ref={containerRef}> { loadmoreElement()} </div>
+         </div>
 
     </>
 }

@@ -5,6 +5,7 @@ import styles from "../../styles/common.module.scss"
 import SurveyCard from "../../commonpents/QuestionnaireCard";
 import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
 import MySearch from "../../commonpents/MySearch";
+import MyPagination from "../../commonpents/MyPagination ";
 
 
 
@@ -41,10 +42,8 @@ const Star: FC = () => {
 
         <div className={styles.footer}>
             {
-                !loading && total > 0 &&
-                <Pagination onChange={() => {
-                    console.log("change")
-                }} total={50} />
+                list.length >0&& total > 0 &&
+                <MyPagination total={total}></MyPagination>
             }
         </div>
     </>

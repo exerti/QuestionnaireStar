@@ -7,35 +7,43 @@ import useTitle from "../../hooks/useTitle";
 import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
 const { Title } = Typography
 
-const TableColumns = [
+interface DataType {
+    key: React.Key,
+    title: string,
+    isPublish: boolean,
+    aswerCount: number,
+    createAt: string
+   
+}
+
+const TableColumns:TableColumnsType<DataType>  = [
     {
         title: "问卷名称",
         dataIndex: "title",
+        key: 'name',
     }, {
         title: "是否发布",
         dataIndex: "isPublish",
         render: (isPublished: boolean) => {
             return isPublished ? <Tag color="processing" >已发布</Tag> : <Tag >未发布</Tag>
-        }
+        },
+        key: 'isPublish'
     },
     {
         title: "问卷数量",
         dataIndex: "aswerCount",
+        key: 'aswerCount'
     },
     {
         title: "创建时间",
         dataIndex: "createAt",
+        key: 'createAt'
 
     }
 
 ]
 
-interface DataType {
-    key: React.Key;
-    name: string;
-    age: number;
-    address: string;
-}
+
 
 
 
@@ -52,8 +60,7 @@ const Trash: FC = () => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         },
         getCheckboxProps: (record: DataType) => ({
-            disabled: record.name === 'Disabled User', // Column configuration not to be checked
-            name: record.name,
+            
         }),
     };
 

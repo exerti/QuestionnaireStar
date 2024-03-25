@@ -4,6 +4,8 @@ type  SearchOpt = {
     keyword?:string,
     isStar?:boolean,
     isdelete?:boolean,
+    page?:number,
+    pagesize?:number
 }
 
 
