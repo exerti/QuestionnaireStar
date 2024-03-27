@@ -13,6 +13,7 @@ import QuestionLayout from "../layouts/QuestionLayout";
 import Edit from "../pages/question/edit";
 import Stat from "../pages/question/stat";
 import FormElementsDemo from "../demo/表单组件/FormElementsDemo";
+import ContextDemo from "../demo/context";
 
 
 const router = createBrowserRouter([
@@ -68,6 +69,9 @@ const router = createBrowserRouter([
     },{
         path: "/demo",
         element: <FormElementsDemo></FormElementsDemo>
+    },{
+        path: "/demo/context",
+        element: <ContextDemo></ContextDemo>
     }
 ])
 

@@ -7,6 +7,8 @@ import CaptchaInput from "../../commonpents/CaptchaInput";
 import { useRequest } from "ahooks";
 import { getVerifyCode, login } from "../../service/user";
 import { setUserToken } from "../../utils/userToken";
+import { useDispatch, useSelector } from "react-redux";
+import { loginReducer } from "../../store/user";
 const { Title } = Typography;
 
 
@@ -18,6 +20,10 @@ function onFinish(values: any) {
 
 const Login: FC = () => {
     const nav = useNavigate()
+    
+    const  dispatch = useDispatch()
+
+
     const { run } = useRequest(async (values) => {
         const { username, password, VerifyCode } = values
         const res = await login(username, password)
@@ -35,6 +41,12 @@ const Login: FC = () => {
 
     function onFinish(values: any) {
         const { username, password, VerifyCode, remember } = values || {}
+        //Redux的缓存
+        dispatch(loginReducer({
+            name: username,
+            password: password,
+        }))
+
         run({ username, password, VerifyCode, remember })
         if (remember) {
             localStorage.setItem("username", username)

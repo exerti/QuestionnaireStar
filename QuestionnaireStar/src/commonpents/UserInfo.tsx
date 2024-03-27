@@ -5,19 +5,25 @@ import React, {
 import { Link, useNavigate } from "react-router-dom";
 import { removeUserToken } from "../utils/userToken";
 import { useRequest } from "ahooks";
-import { getUserInfo } from "../service/user";
 import { UserOutlined } from "@ant-design/icons";
-
-
+import { useGetUserInfo } from "../hooks/useGetUserInfo";
+import { useDispatch } from "react-redux";
+import  {loginOutReducer,loginReducer} from '../store/user';
 
 
 
 const UserInfo = () => {
 
-    const { data } = useRequest(getUserInfo)
-    const { userName, userimage } = data?.data || {}
+    // const { data } = useRequest(getUserInfo)
+    // const { userName, userimage } = data?.data || {}
     const nav = useNavigate()
+
+    const {userName,password} = useGetUserInfo();
+    const dispatch = useDispatch()
+    
+
     function handleClick() {
+        dispatch(loginOutReducer())
         removeUserToken()
         nav('/login')
     }
