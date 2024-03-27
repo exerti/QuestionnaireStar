@@ -1,12 +1,12 @@
 
 import React, { FC, useEffect, useRef, useState } from "react";
 import Immer, { produce } from "immer";
-import SurveyCard from "../../commonpents/QuestionnaireCard";
+import SurveyCard from "../../components/QuestionnaireCard";
 import styles from "../../styles/common.module.scss";
 import { Typography ,Empty, Divider, Spin } from 'antd';
-import MySearch from "../../commonpents/MySearch";
+import MySearch from "../../components/MySearch";
 import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
-import MyPagination from "../../commonpents/MyPagination ";
+import MyPagination from "../../components/MyPagination ";
 import { useSearchParams } from "react-router-dom";
 import { useDebounceFn, useRequest } from "ahooks";
 import { getQuestionList } from "../../service/question";

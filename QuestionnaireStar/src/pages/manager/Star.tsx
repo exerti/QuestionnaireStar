@@ -2,10 +2,10 @@ import React, { FC } from "react";
 import { Divider, Typography, Pagination, Spin } from 'antd';
 const { Title } = Typography;
 import styles from "../../styles/common.module.scss"
-import SurveyCard from "../../commonpents/QuestionnaireCard";
+import SurveyCard from "../../components/QuestionnaireCard";
 import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
-import MySearch from "../../commonpents/MySearch";
-import MyPagination from "../../commonpents/MyPagination ";
+import MySearch from "../../components/MySearch";
+import MyPagination from "../../components/MyPagination ";
 
 
 

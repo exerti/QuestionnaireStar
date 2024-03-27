@@ -3,7 +3,7 @@ import { Card, Space, Typography, Form, Input, Button, Checkbox, message, } from
 import styles from '../../styles/Register.module.scss'
 import { UserAddOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from "react-router-dom";
-import CaptchaInput from "../../commonpents/CaptchaInput";
+import CaptchaInput from "../../components/CaptchaInput";
 import { useRequest } from "ahooks";
 import { getVerifyCode, login } from "../../service/user";
 import { setUserToken } from "../../utils/userToken";

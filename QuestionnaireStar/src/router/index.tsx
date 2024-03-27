@@ -51,25 +51,30 @@ const router = createBrowserRouter([
                         path: "/manager/tarsh",
                         element: <Trash></Trash>
                     }]
-            },{
-                path: "/question",
-                element: <QuestionLayout></QuestionLayout>,
-                children:[
-                    {
-                        path: "/question/edit/:id",
-                        element: <Edit></Edit>
-                    },
-                    {
-                        path: "/question/stat/:id",
-                        element:<Stat></Stat>
-                    }
-                ]
             }
         ]
-    },{
+    },
+    {
+        path: "/question",
+        element: <QuestionLayout></QuestionLayout>,
+        children: [
+            {
+                path: "/question/edit/:id",
+                element: <Edit></Edit>
+            },
+            {
+                path: "/question/stat/:id",
+                element: <Stat></Stat>
+            }
+        ]
+    }
+
+
+
+    , {
         path: "/demo",
         element: <FormElementsDemo></FormElementsDemo>
-    },{
+    }, {
         path: "/demo/context",
         element: <ContextDemo></ContextDemo>
     }

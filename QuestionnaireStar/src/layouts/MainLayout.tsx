@@ -3,8 +3,8 @@ import { Outlet } from "react-router-dom";
 import { Layout, Flex } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import  styles from "./mainLayout.module.scss"
-import Logo from "../commonpents/Logo";
-import UserInfo from "../commonpents/UserInfo";
+import Logo from "../components/Logo";
+import UserInfo from "../components/UserInfo";
 
 
 const MainLayout: FC = () => {

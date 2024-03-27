@@ -10,7 +10,7 @@ const Home: FC = () => {
 
     const nav = useNavigate()
     function handleClick() {
-        nav("/manager/list")
+        nav("/login")
     }
 
     return <>
